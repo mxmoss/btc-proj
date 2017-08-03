@@ -9,6 +9,7 @@ function DonorItem(props) {
 
 function DonorList(props) {
   const donors = props.donors;
+  console.log(donors);
   return (
     <ul>
       {donors.map((donor) =>
@@ -19,24 +20,31 @@ function DonorList(props) {
   );
 }
 
-function DonorJSON() {
-  const donorURL = 'http://54.213.83.132/hackoregon/http/oregon_individual_contributors/5/';
-  var apiRequest1 = fetch(donorURL).then(function(response){
-      return response.json()
-  });
-}
-
 
 class MyDonors extends Component {
   constructor(props) {
     super(props);
-    this.state = {curDonorList : DonorJSON()};
-//    this.state = {curDonorList : donorlist};
+    //    this.state = {curDonorList : donorlist};
+    this.state = {
+        data: []
+    };
   }
+
+  componentDidMount() {
+    const donorURL = 'http://54.213.83.132/hackoregon/http/oregon_individual_contributors/7/';
+    fetch(donorURL, {mode: 'cors'})
+      .then( (response) => {
+        return response.json() })
+      .then( (json) => {
+        this.setState({data: json});
+    });
+  }
+
+
   render() {
     return (
         <div>
-          <DonorList donors={this.state.curDonorList} />
+          <DonorList donors={this.state.data} />
         </div>
 )}
 }
