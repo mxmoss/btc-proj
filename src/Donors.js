@@ -4,19 +4,39 @@ import React, {Component} from 'react';
 import donorlist from './donorlist.json';
 
 function DonorItem(props) {
-  return <li>{props.donor.contributor_payee} - {props.donor.sum}</li>;
+  const contributor_payee = props.donor.contributor_payee;
+  const sum = "$"+Math.round(props.donor.sum * 1000) / 1000;
+  return(
+    <p><a href="#" class="list-group-item">
+       {contributor_payee}&nbsp;&nbsp;-&nbsp;&nbsp;${props.donor.sum}
+       </a>
+    </p>
+
+  )
 }
 
 function DonorList(props) {
   const donors = props.donors;
   console.log(donors);
   return (
-    <ul>
-      {donors.map((donor) =>
-        <DonorItem key={donor.contributor_payee.toString()}
-                  donor={donor} />
-      )}
-    </ul>
+    <div className="panel panel-primary">
+      <div className="panel-heading">
+        <h3 className="panel-title">
+          Top Individual Donors
+        </h3>
+      </div>
+      <div className="panel-body">
+        <ul className="list-group">
+          {donors.map((donor) =>
+            <DonorItem key={donor.contributor_payee.toString()}
+                    donor={donor} />
+          )}
+        </ul>
+      </div>
+      <div className="panel-footer">
+         Footer
+      </div>
+    </div>
   );
 }
 
@@ -32,7 +52,7 @@ class MyDonors extends Component {
 
   componentDidMount() {
     const donorURL = 'http://54.213.83.132/hackoregon/http/oregon_individual_contributors/7/';
-    fetch(donorURL, {mode: 'cors'})
+    fetch(donorURL) //, {mode: 'cors'})
       .then( (response) => {
         return response.json() })
       .then( (json) => {
@@ -43,9 +63,9 @@ class MyDonors extends Component {
 
   render() {
     return (
-        <div>
-          <DonorList donors={this.state.data} />
-        </div>
+      <div className="container">
+        <DonorList donors={this.state.data} />
+      </div>
 )}
 }
 
