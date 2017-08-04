@@ -54,7 +54,7 @@ class MyDonors extends Component {
   }
 
   componentDidMount() {
-    fetch(this.donorURL()) //, {mode: 'cors'})
+    fetch(this.donorURL(), {mode: 'cors'})
       .then( (response) => {
         return response.json() })
       .then( (json) => {
