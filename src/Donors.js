@@ -36,26 +36,30 @@ function DonorList(props) {
   );
 }
 
-
 class MyDonors extends Component {
   constructor(props) {
     super(props);
-    //    this.state = {curDonorList : donorlist};
     this.state = {
+        mode: 'oregon_individual_contributors',
+        //or oregon_business_contributors, oregon_committee_contributors, all_documentation
+        count: 5,
         data: []
     };
   }
 
+  donorURL(){
+    const donorURL = 'http://54.213.83.132/hackoregon/http/'+this.state.mode+'/'+this.state.count+'/';
+    return donorURL;
+  }
+
   componentDidMount() {
-    const donorURL = 'http://54.213.83.132/hackoregon/http/oregon_individual_contributors/7/';
-    fetch(donorURL) //, {mode: 'cors'})
+    fetch(this.donorURL()) //, {mode: 'cors'})
       .then( (response) => {
         return response.json() })
       .then( (json) => {
         this.setState({data: json});
     });
   }
-
 
   render() {
     return (
