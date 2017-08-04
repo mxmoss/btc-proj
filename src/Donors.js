@@ -1,7 +1,8 @@
 //This compnent is for loading a list of donors from json
 //and then presenting
 import React, {Component} from 'react';
-import donorlist from './donorlist.json';
+//uncomment this line for a static donor list
+//import donorlist from './donorlist.json';
 
 function DonorItem(props) {
   const contributor_payee = props.donor.contributor_payee;
@@ -9,7 +10,7 @@ function DonorItem(props) {
   return(
     <tr>
       <td>{contributor_payee}</td>
-      <td>${props.donor.sum}</td>
+      <td>{sum}</td>
     </tr>
 
   )
