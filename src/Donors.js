@@ -7,10 +7,10 @@ function DonorItem(props) {
   const contributor_payee = props.donor.contributor_payee;
   const sum = "$"+Math.round(props.donor.sum * 1000) / 1000;
   return(
-    <p><a href="#" class="list-group-item">
-       {contributor_payee}&nbsp;&nbsp;-&nbsp;&nbsp;${props.donor.sum}
-       </a>
-    </p>
+    <tr>
+      <td>{contributor_payee}</td>
+      <td>${props.donor.sum}</td>
+    </tr>
 
   )
 }
@@ -19,23 +19,19 @@ function DonorList(props) {
   const donors = props.donors;
   console.log(donors);
   return (
-    <div className="panel panel-primary">
-      <div className="panel-heading">
-        <h3 className="panel-title">
-          Top Individual Donors
-        </h3>
-      </div>
-      <div className="panel-body">
-        <ul className="list-group">
+    <div className="table-responsive">
+      <table className="table table-striped table-hover table-bordered table-condensed">
+        <thead><tr>
+            <th data-field="name">Top Individual Donors</th>
+            <th data-field="sum">Amount</th>
+        </tr></thead>
+        <tbody>
           {donors.map((donor) =>
             <DonorItem key={donor.contributor_payee.toString()}
                     donor={donor} />
           )}
-        </ul>
-      </div>
-      <div className="panel-footer">
-         Footer
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 }
