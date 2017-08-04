@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "React app hosted on GitHub Pages",
-  "homepage": "https://mxmoss.github.io/btc-proj",
+  "homepage": "https://mxmoss.github.io/btc-proj/index.html",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mxmoss/btc-proj.git"
@@ -11,7 +11,7 @@
   "author": "Moss Drake <mxmossman@gmail.com>",
   "dependencies": {
     "gh-pages": "^1.0.0",
-    "react": "^15.6.1",
+    "react": "^15.6.1",s
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10"
   },
