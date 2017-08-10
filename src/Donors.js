@@ -74,13 +74,17 @@ class MyDonors extends Component {
   }
 
   refreshData() {
-    fetch(this.donorURL())
+    fetch( this.donorURL() )
       .then( (response) => {
-        return response.json() })
+        return response.json()
+      })
       .then( (json) => {
-        this.setState({data: json});
-    });
-  }
+        this.setState({data: json})
+      })
+      .catch( (error) => {
+        console.log(error)
+      })
+    }
 
   componentDidMount() {
     this.refreshData();
