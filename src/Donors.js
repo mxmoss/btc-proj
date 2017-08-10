@@ -7,23 +7,23 @@ import React, {Component} from 'react';
 //Controls the number of donors to return
 function CountSelect(props){
   return (
-    <div>Result Count:
-      <input class="form-control bfh-number" name="count" onChange={props.onChange} type="number" value={props.value}/>
-    </div>
+    <label htmlFor='count'>Count&nbsp;
+      <input style={{ width: '25%' }} class="form-control bfh-number" name="count" onChange={props.onChange} type="number" value={props.value}/>
+    </label>
   )
 }
 
 //Controls the type donors to return
 function ModeSelect(props){
   return (
-    <div>Mode:
+    <label htmlFor='mode'>Mode
       <select name="mode" onChange={props.onChange} value={props.value}> //"oregon_individual_contributors">
     	<option value="oregon_individual_contributors">Individual</option>
     	<option value="oregon_business_contributors">Corporate</option>
     	<option value="oregon_committee_contributors">Committee</option>
     	<option value="all_documentation">All</option>
       </select>
-    </div>
+    </label>
   )
 }
 
@@ -93,13 +93,12 @@ class MyDonors extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container"  style={{ width: '50%' }} >
         <div className="table-responsive">
-          <form>
+          <div className='form-group' >
           <CountSelect onChange={this.handleChange} value={this.state.count} />
           <ModeSelect  onChange={this.handleChange} value={this.state.mode} />
-          </form>
-          State: {this.state.count}&nbsp;&nbsp;&nbsp;Mode: {this.state.mode}&nbsp;&nbsp;&nbsp;URL: {this.donorURL()}
+          </div>
           <table className="table table-striped table-hover table-bordered table-condensed">
             <thead><tr>
                 <th data-field="name">Top Individual Donors</th>
