@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 //uncomment this line for a static donor list
 //import donorlist from './donorlist.json';
 
+//Controls the number of donors to return
 function CountSelect(props){
   return (
     <div>Result Count:
@@ -12,6 +13,7 @@ function CountSelect(props){
   )
 }
 
+//Controls the type donors to return
 function ModeSelect(props){
   return (
     <div>Mode:
@@ -25,6 +27,7 @@ function ModeSelect(props){
   )
 }
 
+//Donor table details
 function DonorItem(props) {
   const contributor_payee = props.donor.contributor_payee;
   const sum = "$"+Math.round(props.donor.sum * 1000) / 1000;
@@ -35,43 +38,6 @@ function DonorItem(props) {
     </tr>
 
   )
-}
-
-function ControlForm(props){
-  const onChange = props.onChange;
-  const count = props.count;
-  const mode = props.mode;
-  return(
-    <form>
-    <CountSelect onChange={onChange} value={count} />
-    <ModeSelect  onChange={onChange} value={mode} />
-    </form>
-  )
-}
-
-function DonorList(props) {
-  const donors = props.donors;
-  const count = props.count;
-  const mode = props.mode;
-  const onChange = props.onChange;
-  return (
-    <div className="table-responsive">
-      <ControlForm onChange={onChange} count={count} mode={mode}/>
-      State: {count}&nbsp;&nbsp;&nbsp;Mode: {mode}&nbsp;&nbsp;&nbsp;URL: <donorURL />
-      <table className="table table-striped table-hover table-bordered table-condensed">
-        <thead><tr>
-            <th data-field="name">Top Individual Donors</th>
-            <th data-field="sum">Amount</th>
-        </tr></thead>
-        <tbody>
-          {donors.map((donor) =>
-            <DonorItem key={donor.contributor_payee.toString()}
-                    donor={donor} />
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
 }
 
 class MyDonors extends Component {
@@ -115,12 +81,25 @@ class MyDonors extends Component {
   render() {
     return (
       <div className="container">
-        <DonorList
-          donors={this.state.data}
-          onChange={this.handleChange}
-          count={this.state.count}
-          mode={this.state.mode}
-           />
+        <div className="table-responsive">
+          <form>
+          <CountSelect onChange={this.handleChange} value={this.state.count} />
+          <ModeSelect  onChange={this.handleChange} value={this.state.mode} />
+          </form>
+          State: {this.state.count}&nbsp;&nbsp;&nbsp;Mode: {this.state.mode}&nbsp;&nbsp;&nbsp;URL: {this.donorURL()}
+          <table className="table table-striped table-hover table-bordered table-condensed">
+            <thead><tr>
+                <th data-field="name">Top Individual Donors</th>
+                <th data-field="sum">Amount</th>
+            </tr></thead>
+            <tbody>
+              {this.state.data.map((donor) =>
+                <DonorItem key={donor.contributor_payee.toString()}
+                        donor={donor} />
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 )}
 }
