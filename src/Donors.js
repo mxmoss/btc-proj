@@ -7,8 +7,8 @@ import React, {Component} from 'react';
 //Controls the number of donors to return
 function CountSelect(props){
   return (
-    <label htmlFor='count'>Count&nbsp;
-      <input style={{ width: '25%' }} class="form-control bfh-number" name="count" onChange={props.onChange} type="number" value={props.value}/>
+    <label htmlFor='count'>Count
+      <input style={{ width: '30%' }} className="form-control bfh-number" name="count" onChange={props.onChange} type="number" value={props.value}/>
     </label>
   )
 }
@@ -30,7 +30,7 @@ function ModeSelect(props){
 //Donor table details
 function DonorItem(props) {
   const contributor_payee = props.donor.contributor_payee;
-  const sum = "$"+Math.round(props.donor.sum * 1000) / 1000;
+  const sum = "$"+Math.round(props.donor.sum);
   return(
     <tr>
       <td>{contributor_payee}</td>
@@ -50,9 +50,15 @@ class MyDonors extends Component {
         //or oregon_business_contributors, oregon_committee_contributors, all_documentation
         count: 5,
         data: [],
-        url: ''
+        url: '',
+        sorted : 'asc',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event){
+    this.setState({sorted : (this.state.sorted === 'asc' ? 'desc' : 'asc')});
   }
 
   handleChange(event) {
@@ -90,7 +96,6 @@ class MyDonors extends Component {
     this.refreshData();
   }
 
-
   render() {
     return (
       <div className="container"  style={{ width: '50%' }} >
@@ -102,10 +107,15 @@ class MyDonors extends Component {
           <table className="table table-striped table-hover table-bordered table-condensed">
             <thead><tr>
                 <th data-field="name">Top Individual Donors</th>
-                <th data-field="sum">Amount</th>
+                <th data-field="sum"><a name="sorted" href="#amount" onClick={this.handleClick} value={this.state.sorted}>Amount</a></th>
             </tr></thead>
             <tbody>
-              {this.state.data.map((donor) =>
+              {this.state.data
+                .sort((a, b) =>
+                  this.state.sorted === 'asc' ?
+                    a.sum - b.sum :
+                    b.sum - a.sum
+                ).map((donor) =>
                 <DonorItem key={donor.contributor_payee.toString()}
                         donor={donor} />
               )}
