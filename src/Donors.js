@@ -40,6 +40,8 @@ function DonorItem(props) {
   )
 }
 
+const BASE_URL = 'http://54.213.83.132/hackoregon/http/';
+
 class MyDonors extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +49,8 @@ class MyDonors extends Component {
         mode: 'oregon_individual_contributors',
         //or oregon_business_contributors, oregon_committee_contributors, all_documentation
         count: 5,
-        data: []
+        data: [],
+        url: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -63,20 +66,26 @@ class MyDonors extends Component {
         break;
       }
     }
+    this.refreshData();
   }
 
   donorURL(){
-    return 'http://54.213.83.132/hackoregon/http/'+this.state.mode+'/'+this.state.count+'/';
+    return BASE_URL + this.state.mode + '/' + this.state.count+'/'
   }
 
-  componentDidMount() {
-    fetch(this.donorURL(), {mode: 'cors'})
+  refreshData() {
+    fetch(this.donorURL())
       .then( (response) => {
         return response.json() })
       .then( (json) => {
         this.setState({data: json});
     });
   }
+
+  componentDidMount() {
+    this.refreshData();
+  }
+
 
   render() {
     return (
