@@ -27,9 +27,9 @@ function ModeSelect(props){
   )
 }
 
-// function numberWithCommas(x) {
-//    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// }
+function numberWithCommas(x) {
+   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 //Donor table details
 function DonorItem(props) {
@@ -38,9 +38,8 @@ function DonorItem(props) {
   return(
     <tr>
       <td>{contributor_payee}</td>
-      <td>{sum}</td>
+      <td>{numberWithCommas(sum)}</td>
     </tr>
-
   )
 }
 
@@ -102,7 +101,7 @@ class MyDonors extends Component {
           </div>
           <table className="table table-striped table-hover table-bordered table-condensed">
             <thead><tr>
-                <th data-field="name">Top Individual Donors</th>
+                <th data-field="name">Top Donors</th>
                 <th data-field="sum"><a name="sorted" href="#amount" onClick={this.handleClick} value={this.state.sorted}>Amount</a></th>
             </tr></thead>
             <tbody>
