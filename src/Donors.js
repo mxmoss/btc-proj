@@ -59,28 +59,19 @@ class MyDonors extends Component {
 
   handleClick(event){
     this.setState({sorted : (this.state.sorted === 'asc' ? 'desc' : 'asc')});
-  }
-
-  handleChange(event) {
-    switch (event.target.name){
-      case 'count': {
-        this.setState({count: event.target.value});
-        break;
-      }
-      case 'mode': {
-        this.setState({mode: event.target.value});
-        break;
-      }
-    }
     this.refreshData();
   }
 
-  donorURL(){
-    return BASE_URL + this.state.mode + '/' + this.state.count+'/'
+  handleChange(event) {
+    alert('setting '+event.target.name+' to '+event.target.value);
+    this.setState({[event.target.name]: event.target.value});
+    this.refreshData();
   }
 
   refreshData() {
-    fetch( this.donorURL() )
+    this.setState({url: BASE_URL + this.state.mode + '/' + this.state.count+'/'});
+    alert(this.state.url);
+    fetch(this.state.url)
       .then( (response) => {
         return response.json()
       })
