@@ -17,7 +17,7 @@ function CountSelect(props){
 function ModeSelect(props){
   return (
     <label htmlFor='mode'>Mode
-      <select name="mode" onChange={props.onChange} value={props.value}> //"oregon_individual_contributors">
+      <select name="mode" onChange={props.onChange} value={props.value}>
     	<option value="oregon_individual_contributors">Individual</option>
     	<option value="oregon_business_contributors">Corporate</option>
     	<option value="oregon_committee_contributors">Committee</option>
@@ -26,6 +26,10 @@ function ModeSelect(props){
     </label>
   )
 }
+
+// function numberWithCommas(x) {
+//    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// }
 
 //Donor table details
 function DonorItem(props) {
@@ -58,20 +62,21 @@ class MyDonors extends Component {
   }
 
   handleClick(event){
-    this.setState({sorted : (this.state.sorted === 'asc' ? 'desc' : 'asc')});
-    this.refreshData();
+    this.setState({sorted : (this.state.sorted === 'asc' ? 'desc' : 'asc')}, ()=>{
+       this.refreshData(BASE_URL + this.state.mode + '/' + this.state.count+'/');
+     });
   }
 
   handleChange(event) {
-    alert('setting '+event.target.name+' to '+event.target.value);
-    this.setState({[event.target.name]: event.target.value});
-    this.refreshData();
+//    alert('setting '+event.target.name+' to '+event.target.value);
+    this.setState({[event.target.name]: event.target.value}, ()=>{
+       this.refreshData(BASE_URL + this.state.mode + '/' + this.state.count+'/');
+     });
   }
 
-  refreshData() {
-    this.setState({url: BASE_URL + this.state.mode + '/' + this.state.count+'/'});
-    alert(this.state.url);
-    fetch(this.state.url)
+  refreshData(url) {
+    this.setState({url: url});
+    fetch(url)
       .then( (response) => {
         return response.json()
       })
@@ -84,7 +89,7 @@ class MyDonors extends Component {
     }
 
   componentDidMount() {
-    this.refreshData();
+    this.refreshData(BASE_URL + this.state.mode + '/' + this.state.count+'/');
   }
 
   render() {
@@ -93,7 +98,7 @@ class MyDonors extends Component {
         <div className="table-responsive">
           <div className='form-group' >
           <CountSelect onChange={this.handleChange} value={this.state.count} />
-          <ModeSelect  onChange={this.handleChange} value={this.state.mode} />
+          <ModeSelect onChange={this.handleChange} value={this.state.mode} />
           </div>
           <table className="table table-striped table-hover table-bordered table-condensed">
             <thead><tr>
